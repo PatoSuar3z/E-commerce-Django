@@ -1,0 +1,73 @@
+1- debemos crear la pagina de modificar y copiar todo lo del agregar en ella.
+2- creamos el view y la url para poder llamar a la pag
+
+3- Crear una pagina para listar los productos y poder configurarlos( view,url)
+	<table class="table table-condensed table-striped">
+                   <thead>  
+                       <tr>
+                           <th>CODIGO</th>
+                           <th>NOMBRE</th>
+                           <th>MARCA</th>
+                           <th>PRECIO</th>
+                           <th>STOCK</th>
+                           <th>DESCRIPCION</th>
+                           <th>TIPO</th>
+                           <th>IMAGEN</th>
+                           <th>FECHA INGRESO</th>
+                           <th>OPCIONES</th>
+                       </tr>
+                   </thead>
+                   <tbody>
+                    {% for aux in listaProductos %}
+                        <tr>
+                            <td>{{ aux.plu_codigo }}</td>
+                            <td>{{ aux.nombre }}</td>
+                            <td>{{ aux.marca }}</td>
+                            <td>{{ aux.precio }}</td>
+                            <td>{{ aux.stock }}</td>
+                            <td>{{ aux.descripcion }}</td>
+                            <td>{{ aux.tipo }}</td>
+                            <td>{{ aux.imagen }}</td>
+                            <td>{{ aux.fecha_ingreso }}</td>
+                            <td>
+                                <a href="{% url 'modificar' aux.id %}" class="btn btn-info">Modificar</a>
+                                <a href="{% url 'eliminarproducto' aux.id %}" class="btn btn-danger">Eliminar</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                   </tbody>
+               </table>
+
+4- en la url agregar el id en la ruta de modifica:
+    path('modificar/<id>', modificarproducto, name="modificarproducto"),
+
+5- en la view:
+def listarproductos(request):
+    productosAll = Producto.objects.all()
+    datos = {
+        'listaProductos' : productosAll
+    }
+    
+    return render(request, 'app/productos/listar_producto.html', datos)
+
+# SECCION MODIFICAR
+def modificarproducto(request, id):
+    producto = Producto.objects.get(id=id)
+    datos = {
+        'form' : ProductoForm(instance=producto)
+    }
+    if request.method == 'POST':
+        formulario = ProductoForm(data=request.POST, files=request.FILES, instance=producto)
+        if formulario.is_valid():
+            formulario.save()
+            datos['mensaje'] = 'Producto modificado correctamente!'
+            datos['form'] = formulario
+
+    return render(request, 'app/productos/modificar_producto.html', datos)
+
+# SECCION ELIMINAR
+def eliminarproducto(request, id):
+    producto = Producto.objects.get(id=id)
+    producto.delete()
+
+    return redirect(to="listarproductos")

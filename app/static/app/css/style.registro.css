@@ -1,0 +1,16 @@
+body{
+    background-image: url(../img/plantas-portada.jpg);
+    background-size: 100%;
+    font-weight: lighter;
+    color: rgb(0, 0, 0);
+}
+
+.container{
+    margin-top: 50px;
+}
+
+h1{
+    text-align: center;
+    margin-top: 10px;
+    font-weight: lighter;
+}

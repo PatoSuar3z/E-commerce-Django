@@ -1,0 +1,43 @@
+- crear archivo llamado requirements.txt
+-pip install -r requirements.txt
+- instalar pillow: pip install pillow
+- crear carpeta media ( para almacenar los archivos )
+- en settings agregar:
+	import os
+	
+	MEDIA_URL = '/media/' ( cuando las imagenes ya estan gaurdadas )
+	MEDIA_ROOT = os.path.join(BASE_DIR, 'media') ( cuando vamos a guardar )
+
+- urls.py general 
+	from django.conf import settings
+	from django.conf.urls.static import static
+
+	abajo del patterns:
+	urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+- models.py
+	agregar campo de imagen: imagen = models.ImageField(upload_to="productos", null=True)
+
+- en el formulario agregamos:
+	enctype="multipart/form-data"
+
+- en la view:
+	formulario = ProductoForm(request.POST, files=request.FILES)
+
+- en el listar:
+{% if aux.imagen %}
+   <img src="{{ aux.imagen.url }}" class="img-fluid item-img w-100 mb-3">
+{% else %}
+   <img src="{% static 'app/img/defecto.png' %}" class="img-fluid item-img w-100 mb-3">
+{% endif %}
+
+- agregamos la fecha:
+	fecha_ingreso = models.DateField()
+
+- en forms:
+	nombre = forms.CharField(min_length=10,max_length=20)
+    	precio = forms.IntegerField(min_value=400)
+	
+	widgets = {
+            'fecha_ingreso' : forms.SelectDateWidget(years=range(2020,2023))
+        }

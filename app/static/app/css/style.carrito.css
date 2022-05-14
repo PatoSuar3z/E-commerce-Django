@@ -1,0 +1,46 @@
+nav{
+    font-weight: lighter;
+    background-color: rgba(221, 216, 216, 0.534);
+}
+body{
+    background-image: url(../img/plantas-portada.jpg);
+    background-size: 100%;
+}
+
+
+.imagen-producto{
+    border-radius: 5px;
+}
+#precio-producto{
+    margin-left: 12cm;
+    text-align: right;
+}
+
+
+#carrito{
+    background-color: rgba(221, 216, 216, 0.534);
+    margin: 10%;
+    color:  rgb(0, 0, 0);
+    border-radius: 15px;
+    
+}
+
+
+p{
+    color: rgb(0, 0, 0);
+    margin-left: 10px;
+    font-weight: lighter; 
+}
+.total{
+    text-align: right;
+}
+
+h6{
+    font-weight: lighter; 
+}
+h1{
+    font-weight: lighter; 
+}
+
+
+
