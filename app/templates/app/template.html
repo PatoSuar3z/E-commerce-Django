@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+	<title>Home</title>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+<!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="{%static 'images/icons/favicon.png' %}"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/bootstrap/css/bootstrap.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/fonts/iconic/css/material-design-iconic-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/fonts/linearicons-v1.0.0/icon-font.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/animate/animate.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/css-hamburgers/hamburgers.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/animsition/css/animsition.min.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/select2/select2.min.css' %}">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/daterangepicker/daterangepicker.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/slick/slick.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/MagnificPopup/magnific-popup.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/vendor/perfect-scrollbar/perfect-scrollbar.css' %}">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="{%static 'app/css/util.css' %}">
+	<link rel="stylesheet" type="text/css" href="{%static 'app/css/main.css' %}">
+<!--===============================================================================================-->
+</head>
+<body class="animsition">
+	
+	<!-- Header -->
+	<header>
+		<!-- Header desktop -->
+		<div class="container-menu-desktop">
+			<!-- Topbar -->
+			<div class="top-bar">
+				<div class="content-topbar flex-sb-m h-full container">
+					<div class="left-top-bar">
+						Bienvenido otra vez @{{user.username}}!!
+					</div>
+
+					<div class="right-top-bar flex-w h-full">
+
+						{% if user.is_authenticated %}
+
+						<a href="{% url 'logout' %}" class="flex-c-m p-lr-10 trans-04">
+							Cerrar Sesion
+						</a>
+						
+						<a href="{% url 'perfil' %}" class="flex-c-m trans-04 p-lr-25">
+							Mi Cuenta
+						</a>
+						{% else %}
+						<a href="{% url 'login' %}" class="flex-c-m p-lr-10 trans-04">
+							Iniciar Sesion
+						</a>
+
+						<a href="{% url 'registro' %}" class="flex-c-m p-lr-10 trans-04">
+							Registrarse
+						</a>
+						{% endif%}
+						
+
+						
+					</div>
+				</div>
+			</div>
+
+			<div class="wrap-menu-desktop">
+				<nav class="limiter-menu-desktop container">
+					
+					<!-- Logo desktop -->		
+					<a href="{% url 'index' %}" class="logo">
+						<img src="{%static 'app/images/icons/logo-01.png' %}" alt="IMG-LOGO">
+					</a>
+
+					<!-- Menu desktop -->
+					<div class="menu-desktop">
+						<ul class="main-menu">
+							<li class="active-menu">
+							<a href="{% url 'index' %}">Inicio</a>
+								
+							</li>
+
+							<li>
+								<a href="{% url 'productos' %}">Productos</a>
+							</li>
+							{% if perms.app.view_items_carrito %}
+							<li  >
+								<a href="{% url 'carrito' %}">Carrito</a>
+							</li>
+							{% endif %}
+
+							{% if perms.app.view_producto %}
+							<li>
+								<a href="{% url 'listar' %}">Listar Productos</a>
+							</li>
+							{% endif %}
+
+							{% if perms.app.add_producto %}
+							<li>
+								<a href="{% url 'agregar_producto' %}">Agregar Prodcuto</a>
+							</li> 
+							{% endif %}
+							
+							
+							<li>
+								<a href="{% url 'api_catalogo' %}">Catalogo API</a>
+							</li>
+
+							<li>
+								<a href="{% url 'api_externa' %}">Api Externa</a>
+							</li>
+
+							{% if perms.app.view_producto %}
+							<li>
+								<a href="{% url 'historial' %}">Historial Compras</a>
+							</li>
+							{% endif %}
+						</ul>
+					</div>	
+
+					<!-- Icon header -->
+					
+				</nav>
+			</div>	
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap-header-mobile">
+			<!-- Logo moblie -->		
+			<div class="logo-mobile">
+				<a href="{% url 'index' %}"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+			</div>
+
+			<!-- Icon header -->
+			
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+				<span class="hamburger-box">
+					<span class="hamburger-inner"></span>
+				</span>
+			</div>
+		</div>
+
+
+		<!-- Menu Mobile -->
+		<div class="menu-mobile">
+			<ul class="topbar-mobile">
+				
+
+				<li>
+					<div class="right-top-bar flex-w h-full">
+						
+						<a href="{% url 'login' %}" class="flex-c-m p-lr-10 trans-04">
+							Iniciar Sesion
+						</a>
+
+						<a href="{% url 'registro' %}" class="flex-c-m p-lr-10 trans-04">
+							Registrarse
+						</a>
+
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
+							ESP
+						</a>
+
+						<a href="#" class="flex-c-m p-lr-10 trans-04">
+							CLP
+						</a>
+					</div>
+				</li>
+			</ul>
+
+			<ul class="main-menu-m">
+				<li>
+					<a href="{% url 'index' %}">Inicio</a>
+								
+				</li>
+
+				<li>
+					<a href="{% url 'productos' %}">Productos</a>
+				</li>
+				{% if perms.app.view_items_carrito %}
+				<li  >
+					<a href="{% url 'carrito' %}">Carrito</a>
+				</li>
+				{% endif %}
+
+				{% if perms.app.view_producto %}
+				<li>
+					<a href="{% url 'listar' %}">Listar Productos</a>
+				</li>
+				{% endif %}
+
+				{% if perms.app.add_producto %}
+				<li>
+					<a href="{% url 'agregar_producto' %}">Agregar Prodcuto</a>
+				</li> 
+				{% endif %}
+				
+				
+				<li>
+					<a href="{% url 'api_catalogo' %}">Catalogo API</a>
+				</li>
+
+				<li>
+					<a href="{% url 'api_externa' %}">Plantas Carnivoras</a>
+				</li>
+
+				{% if perms.app.view_producto %}
+				<li>
+					<a href="{% url 'historial' %}">Historial Compras</a>
+				</li>
+				{% endif %}
+			</ul>
+		</div>
+
+		
+	</header>
+
+	
+    {% block content %}
+	<!-- Product -->
+	<section class="bg0 p-t-23 p-b-140">
+		<div class="container">
+			
+        </div>        
+	</section>
+    {% endblock %}
+
+<!-- Footer -->
+<footer class="bg3 p-t-75 p-b-32">
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-6 col-lg-3 p-b-50">
+				<h4 class="stext-301 cl0 p-b-30">
+					Nuestros Productos
+				</h4>
+
+				<ul>
+					<li class="p-b-10">
+						<a href="{% url 'productos' %}" class="stext-107 cl7 hov-cl1 trans-04">
+							Plantas
+						</a>
+					</li>
+
+				</ul>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 p-b-50">
+				<h4 class="stext-301 cl0 p-b-30">
+					Ayuda
+				</h4>
+
+				<ul>
+					<li class="p-b-10">
+						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							Seguimineto
+						</a>
+					</li>
+
+					<li class="p-b-10">
+						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							Devoluciones
+						</a>
+					</li>
+
+					<li class="p-b-10">
+						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							Envios
+						</a>
+					</li>
+
+					<li class="p-b-10">
+						<a href="#" class="stext-107 cl7 hov-cl1 trans-04">
+							FAQs
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 p-b-50">
+				<h4 class="stext-301 cl0 p-b-30">
+					AYUDA
+				</h4>
+
+				<p class="stext-107 cl7 size-201">
+					Alguna Pregunta? Contactanos estamos ubicados en "P. Sherman, calle Wallaby, 42, Sydney”.
+				</p>
+
+				<div class="p-t-27">
+					<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<i class="fa fa-facebook"></i>
+					</a>
+
+					<a href="#" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<i class="fa fa-instagram"></i>
+					</a>
+
+					<a href="https://github.com/PatoSuar3z" class="fs-18 cl7 hov-cl1 trans-04 m-r-16">
+						<i class="fa fa-github"></i>
+					</a>
+				</div>
+			</div>
+
+			<div class="col-sm-6 col-lg-3 p-b-50">
+				<h4 class="stext-301 cl0 p-b-30">
+					Subscribete A Nuestra Revista
+				</h4>
+
+				<form>
+					<div class="wrap-input1 w-full p-b-4">
+						<input class="input1 bg-none plh1 stext-107 cl7" type="text" name="email" placeholder="email@example.com">
+						<div class="focus-input1 trans-04"></div>
+					</div>
+
+					<div class="p-t-18">
+						<button class="flex-c-m stext-101 cl0 size-103 bg1 bor1 hov-btn2 p-lr-15 trans-04">
+							Subscribe
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<div class="p-t-40">
+			<div class="flex-c-m flex-w p-b-18">
+				<a href="#" class="m-all-1">
+					<img src="{%static 'app/images/icons/icon-pay-01.png' %}" alt="ICON-PAY">
+				</a>
+
+				<a href="#" class="m-all-1">
+					<img src="{%static 'app/images/icons/icon-pay-02.png' %}" alt="ICON-PAY">
+				</a>
+
+				<a href="#" class="m-all-1">
+					<img src="{%static 'app/images/icons/icon-pay-03.png' %}" alt="ICON-PAY">
+				</a>
+
+				<a href="#" class="m-all-1">
+					<img src="{%static 'app/images/icons/icon-pay-04.png' %}" alt="ICON-PAY">
+				</a>
+
+				<a href="#" class="m-all-1">
+					<img src="{%static 'app/images/icons/icon-pay-05.png' %}" alt="ICON-PAY">
+				</a>
+			</div>
+
+			<p class="stext-107 cl6 txt-center">
+				
+			Copyright &copy;<script>document.write(new Date().getFullYear());</script> Todos los derechos reservados |  <i class="fa fa-heart-o" aria-hidden="true"></i>
+
+
+			</p>
+		</div>
+	</div>
+</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="zmdi zmdi-chevron-up"></i>
+		</span>
+	</div>
+
+
+
+<!--===============================================================================================-->	
+	<script src="{%static 'app/vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/bootstrap/js/popper.js' %}"></script>
+	<script src="{%static 'app/vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/select2/select2.min.js' %}"></script>
+	<script>
+		$(".js-select2").each(function(){
+			$(this).select2({
+				minimumResultsForSearch: 20,
+				dropdownParent: $(this).next('.dropDownSelect2')
+			});
+		})
+	</script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/daterangepicker/moment.min.js' %}"></script>
+	<script src="{%static 'app/vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/slick/slick.min.js' %}"></script>
+	<script src="{%static 'app/js/slick-custom.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/parallax100/parallax100.js' %}"></script>
+	<script>
+        $('.parallax100').parallax100();
+	</script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/MagnificPopup/jquery.magnific-popup.min.js' %}"></script>
+	<script>
+		$('.gallery-lb').each(function() { // the containers for all your galleries
+			$(this).magnificPopup({
+		        delegate: 'a', // the selector for gallery item
+		        type: 'image',
+		        gallery: {
+		        	enabled:true
+		        },
+		        mainClass: 'mfp-fade'
+		    });
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/isotope/isotope.pkgd.min.js' %}"></script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/sweetalert/sweetalert.min.js' %}"></script>
+	<script>
+		$('.js-addwish-b2').on('click', function(e){
+			e.preventDefault();
+		});
+
+		$('.js-addwish-b2').each(function(){
+			var nameProduct = $(this).parent().parent().find('.js-name-b2').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-b2');
+				$(this).off('click');
+			});
+		});
+
+		$('.js-addwish-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.js-name-detail').html();
+
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+
+				$(this).addClass('js-addedwish-detail');
+				$(this).off('click');
+			});
+		});
+
+		/*---------------------------------------------*/
+
+		$('.js-addcart-detail').each(function(){
+			var nameProduct = $(this).parent().parent().parent().parent().find('.js-name-detail').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+	
+	</script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/vendor/perfect-scrollbar/perfect-scrollbar.min.js' %}"></script>
+	<script>
+		$('.js-pscroll').each(function(){
+			$(this).css('position','relative');
+			$(this).css('overflow','hidden');
+			var ps = new PerfectScrollbar(this, {
+				wheelSpeed: 1,
+				scrollingThreshold: 1000,
+				wheelPropagation: false,
+			});
+
+			$(window).on('resize', function(){
+				ps.update();
+			})
+		});
+	</script>
+<!--===============================================================================================-->
+	<script src="{%static 'app/js/main.js' %}"></script>
+	<script src="{%static 'app/js/api2.js' %}"></script>
+	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	{% if messages %}
+		{% for m in messages%}
+			<script>
+				Swal.fire({
+					"title": "Felicitaciones",
+					"text": "{{m}}",
+					"icon":"success"
+				})
+			</script>
+		{% endfor %}
+	{% endif %}
+
+</body>
+</html>

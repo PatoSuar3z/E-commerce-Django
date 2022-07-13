@@ -1,0 +1,35 @@
+{% extends 'app/template.html' %}
+
+{% block content %}
+
+<br>
+<br>
+<br>
+<div class="col-sm-10" >
+    <div class="row">
+        <div class="container mt-3" style="color: black;">
+            <h2>Perfil</h2>
+            
+            <div class="media border p-3">
+            <img src="{{ aux.imagen.url }}" alt="John Doe" class="mr-3 mt-3 rounded-circle" style="width:400px;">
+            <div class="media-body">
+                <br>
+                <h4 style="color: black;">Nombre Usuario: <i>{{user.username}}</i></h4>
+                <br>
+                <h4 style="color: black;">Nombre:  <i>{{user.first_name}}</i></h4>
+                <br>   
+                <h4 style="color: black;">Apellido: <i>{{ user.last_name }}</i></h4>
+                <br>
+                <h4 style="color: black;">Correo: <i>{{ user.email }}</i></h4>
+                
+                <br>  
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br>
+<br>
+<br>
+
+{% endblock %}	

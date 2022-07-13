@@ -1,0 +1,74 @@
+{% extends 'app/template.html' %}
+{% load static %}
+{% block content %}
+
+
+<script>
+    function eliminarProducto(codigo){
+        Swal.fire({
+            "title": "¿Estas Seguro?",
+			"text": "esta accion no se pude deshacer",
+			"icon":"question",
+            "showCancelButton":true,
+            "cancelButtonText":"No ,Cancelar",
+            "confirmButtonText":"Si, Eliminar",
+            "reverseButtons":true,
+            "confirmButtonColor":"#dc3545"
+        })
+        .then(function(result){
+            if(result.isConfirmed){
+                window.location.href = "/eliminarproducto/" + codigo +"/"
+            }
+        })
+    }
+</script>
+
+<form class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <tr class="table_head">
+                                <th >CODIGO</th>
+                                <th >NOMBRE</th>
+                                <th >PRECIO</th>
+                                <th >STOCK</th>
+                                <th >TIPO</th>
+                                <th >IMAGEN</th>
+                                <th >FECHA INGRESO</th>
+                                <th >OPCIONES</th>
+                            </tr>
+                            
+                            {% for aux in listarProductos %}
+                            <tr class="">
+                                <td>{{ aux.codigo }}</td>
+                                <td>{{ aux.nombre }}</td>
+                                <td>${{ aux.precio }}</td>
+                                <td>{{ aux.stock }}</td>
+                                <td>{{ aux.tipo }}</td>
+                                <td><img src="{{ aux.imagen.url }}" alt="40" width="40"></td>
+                                <td>{{ aux.created_at }}</td>
+                                <td>
+                                    {% if perms.app.change_producto %}
+                                    <a href="{% url 'modificarproducto' aux.codigo %}" class="btn ">Modificar</a>
+                                    {% endif %}
+                                    {% if perms.app.delete_producto %}
+                                    <a href="#" onclick="eliminarProducto({{aux.codigo}})" class= "btn">Eliminar</a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                </div>
+            </div>
+
+            
+        </div>
+    </div>
+</form>
+
+{% endblock %}

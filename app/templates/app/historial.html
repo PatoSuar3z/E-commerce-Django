@@ -1,0 +1,42 @@
+{% extends 'app/template.html' %}
+
+{% block content %}
+
+<form class="bg0 p-t-75 p-b-85">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-10 col-xl-7 m-lr-auto m-b-50">
+                <div class="m-l-25 m-r--38 m-lr-0-xl">
+                    <div class="wrap-table-shopping-cart">
+                        <table class="table-shopping-cart">
+                            <tr class="table_head">
+                                <th class="column-1">Imagen</th>
+                                <th class="column-2">Producto</th>
+                                <th class="column-5">Precio</th>
+                            </tr>
+                            
+                            {% for aux in listarCarrito %}
+                            <tr class="table_row">
+                                
+                                <td class="column-1">
+                                    <div class="how-itemcart1">
+                                        <img src="{{ aux.imagen.url }}" alt="IMG" >
+                                    </div>
+                                </td>
+                                <td class="column-2">{{ aux.nombre_producto }}</td>
+                                <td class="column-5">${{ aux.precio_producto }}</td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+
+                    <div class="flex-w flex-sb-m bor15 p-t-18 p-b-15 p-lr-40 p-lr-15-sm">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+{% endblock %}

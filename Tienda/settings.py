@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,6 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,8 +42,11 @@ INSTALLED_APPS = [
     'app.apps.AppConfig',
     'colorfield',
     'crispy_forms',
+    'Tienda',
+    'rest_framework',
 ]
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 X_FRAME_OPTIONS = "SAMEORIGIN" #solo si django es mayor a la version 3.0
 
 MIDDLEWARE = [
@@ -80,10 +84,14 @@ WSGI_APPLICATION = 'Tienda.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'db_tienda',
+    'USER': 'root',
+    'PASSWORD': '',
+    'HOST': 'localhost',
+    'PORT': '3306',
+    }   
 }
 
 
@@ -123,6 +131,11 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'app/static')
+]
+
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
@@ -133,4 +146,7 @@ import os
 MEDIA_URL = '/media/' #(cuando las imagenes ya estan gaurdadas )
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media') #( cuando vamos a guardar )
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

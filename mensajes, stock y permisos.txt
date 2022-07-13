@@ -1,0 +1,125 @@
+***Agregaremos el sw2 a todas las funciones
+
+1- en settings.py:
+	MESSAGE_STORAGE = "django.contrib.messages.storage.cookie.CookieStorage"
+
+2- en views:
+	from django.contrib import messages
+
+3- en agregar producto por ejm:
+	dentro del POST:
+		messages.success(request,'Producto guardado correctamente!')
+
+4- en el base o en el agregar o modificar:
+	{% if messages %}
+                    {% for msj in messages %}
+                        <script>
+                            Swal.fire({
+                                title: 'Guardado!',
+                                text: '{{ msj }}',
+                                icon: 'success',
+                                showConfirmButton: false,
+                                timer: 2000
+                            });
+                        </script>
+                    {% endfor %}
+                {% endif %}
+
+5- crear dentro de templates crear una carpeta llamada registration
+
+6- en registration crear:
+	login.html
+
+7- en login.html:
+	crear un formulario:
+		<form action="" method="POST">
+    			{% csrf_token %}
+    			{{ form | crispy }}
+    		<button type="submit" class="btn btn-success">Iniciar sesión</button>
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
+</form>
+
+8- en el settings:
+	LOGIN_REDIRECT_URL = '/'
+	LOGOUT_REDIRECT_URL = '/'
+
+8.1- no olvidar en el url.py general:
+	 path('accounts/',include('django.contrib.auth.urls')),
+
+9- agregar enlace en el menu:
+	{% if user.is_authenticated %}
+		href="{% url 'logout' %}">Logout</a>
+	{% else %}
+		href="{% url 'login' %}">Log in</a>
+	{% endif %}
+
+10. agregar el usuario:
+	{{ user.username}}
+
+11. para registrar el usuario:
+	- crear pagina dentro de registration: registro.html y colocar lo mismo que el login
+
+12. crear la view y el url para la pagina de registro.html
+
+13. en el forms.py importar:
+	from django.contrib.auth.forms import UserCreationForm
+	
+	class FormularioUserResgistro(UserCreationForm):
+		pass
+
+
+14. en la view.py:
+	importar FormularioUserRegistro
+	from django.contrib.auth import authenticate, login
+
+def register(request):
+    datos = {
+        'form' : FormularioUserRegistro()
+    }
+    if request.method == 'POST':
+        formulario = FormularioUserRegistro(data=request.POST)
+        if formulario.is_valid():
+            formulario.save()
+            #user = authenticate(username=formulario.cleaned_data["username"],password=formulario.cleaned_data["password1"])
+            #login(request,user)
+            messages.success(request,'Registrado correctamente!')
+            #return redirect(to="home")
+        datos["form"] = formulario
+
+    return render(request, 'registration/register.html', datos)
+
+15. si quieren agregar mas elementos revisar la tabla de user y agregarlos en el formulario:
+	from django.contrib.auth.models import User
+
+	class FormularioUserRegistro(UserCreationForm):
+
+    class Meta:
+        model = User
+        fields = ['username','first_name','last_name','email','password1','password2']
+
+16. para los usuarios uno los puede agrupar en grupos de permisos o simplemente al usuario individual se le pueden asignar:
+	- en el admin configurar que permisos
+	- en las paginas que necesiten validar permisos:
+		-por ejm base.hml: 
+			- app.view_producto
+			- app.add_producto
+			- app.change_producto
+			- app.delete_producto
+
+17- primero configuramos la seguridad interna:
+	- en views:
+		from django.contrib.auth.decorators import login_required, permission_required
+		
+		@login_required # es solo para pedir un login
+		@permission_required('app.add_producto') #Arriba de los def
+		@permission_required('app.view_producto') #Arriba de los def			
+
+	- en donde se necesite en los html:
+		{% if perms.app.add_producto %}
+
+		{% endif %}
+
+
+
+
+	
